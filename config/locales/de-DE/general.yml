@@ -288,6 +288,10 @@ de:
       sign_in: Anmelden mit Google
       sign_up: Registrierung mit Google
       name: Google
+    keycloak_oauth2:
+      sign_in: Anmelden mit Keycloak
+      sign_up: Registrierung mit Keycloak
+      name: Keycloak
     twitter:
       sign_in: Anmelden mit Twitter
       sign_up: Registrierung mit Twitter

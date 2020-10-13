@@ -244,6 +244,8 @@ Devise.setup do |config|
   config.omniauth :twitter, Rails.application.secrets.twitter_key, Rails.application.secrets.twitter_secret
   config.omniauth :facebook, Rails.application.secrets.facebook_key, Rails.application.secrets.facebook_secret, scope: "email", info_fields: "email,name,verified"
   config.omniauth :google_oauth2, Rails.application.secrets.google_oauth2_key, Rails.application.secrets.google_oauth2_secret
+  config.omniauth :keycloak_oauth2, Rails.application.secrets.keycloak_key, Rails.application.secrets.keycloak_secret, client_options: {site: "http://samltest.muenchen.de", realm: "public"}
+  #config.omniauth :google_oauth2, "39433842646-tdlqlh7d7rn25gbs067bek2bvsc3vbvq.apps.googleusercontent.com", "82FlXPbpcm4bLcK6QONK8BbG"
   config.omniauth :wordpress_oauth2,
                   Rails.application.secrets.wordpress_oauth2_key,
                   Rails.application.secrets.wordpress_oauth2_secret,

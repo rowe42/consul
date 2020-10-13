@@ -15,6 +15,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     sign_in_with :wordpress_login, :wordpress_oauth2
   end
 
+  def keycloak_oauth2
+    sign_in_with :keycloak_login, :keycloak_oauth2
+  end
+
   def after_sign_in_path_for(resource)
     if resource.registering_with_oauth
       finish_signup_path
