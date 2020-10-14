@@ -288,7 +288,7 @@ de:
       sign_in: Anmelden mit Google
       sign_up: Registrierung mit Google
       name: Google
-    keycloak_oauth2:
+    openid_connect:
       sign_in: Anmelden mit Keycloak
       sign_up: Registrierung mit Keycloak
       name: Keycloak

@@ -244,8 +244,32 @@ Devise.setup do |config|
   config.omniauth :twitter, Rails.application.secrets.twitter_key, Rails.application.secrets.twitter_secret
   config.omniauth :facebook, Rails.application.secrets.facebook_key, Rails.application.secrets.facebook_secret, scope: "email", info_fields: "email,name,verified"
   config.omniauth :google_oauth2, Rails.application.secrets.google_oauth2_key, Rails.application.secrets.google_oauth2_secret
-  config.omniauth :keycloak_oauth2, Rails.application.secrets.keycloak_key, Rails.application.secrets.keycloak_secret, client_options: {site: "http://samltest.muenchen.de", realm: "public"}
   #config.omniauth :google_oauth2, "39433842646-tdlqlh7d7rn25gbs067bek2bvsc3vbvq.apps.googleusercontent.com", "82FlXPbpcm4bLcK6QONK8BbG"
+  config.omniauth :openid_connect, {
+	  name: :openid_connect,
+          discovery: false,
+          issuer: "http://keycloak:8080/auth/realms/public",
+	  scope: [:openid, :email, :profile, :address],
+	  response_type: :code,
+          #client_signing_alg: :RS256,
+	  uid_field: "preferred_username",
+	  client_options: {
+	    port: 8080,
+	    scheme: "http",
+      host: Rails.application.secrets.openid_connect_host,
+      #host: "keycloak",
+      identifier: Rails.application.secrets.openid_connect_key,
+      #identifier: "consul",
+      secret: Rails.application.secrets.openid_connect_secret,
+	    #secret: "73d0508b-27a6-4918-9cd4-2d0d1656469c",
+      authorization_endpoint: "/auth/realms/public/protocol/openid-connect/auth",
+      token_endpoint: "/auth/realms/public/protocol/openid-connect/token",
+      userinfo_endpoint: "/auth/realms/public/protocol/openid-connect/userinfo",
+      jwks_uri: "/auth/realms/public/protocol/openid-connect/certs",
+      redirect_uri: Rails.application.secrets.openid_connect_redirect_uri,
+      #redirect_uri: "http://samltest.muenchen.de:3000/users/auth/openid_connect/callback",
+	  },
+  }
   config.omniauth :wordpress_oauth2,
                   Rails.application.secrets.wordpress_oauth2_key,
                   Rails.application.secrets.wordpress_oauth2_secret,

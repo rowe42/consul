@@ -18,8 +18,9 @@ services:
     build: .
     entrypoint: /usr/local/bin/entrypoint.sh
     command: bundle exec rails s -p 3000 -b "0.0.0.0"
+    #hack, wenn man consul direkt im Container starten will per /var/www/consul/bin/rails s -p 3000 -b "0.0.0.0"
+    #command: tail -F anything
     working_dir: /var/www/consul
-    # command: tail -F anything
 
     # rely on the RAILS_ENV value of the host machine
     # environment:
@@ -28,6 +29,7 @@ services:
     # makes the app container aware of the DB container
     depends_on:
       - database
+      - keycloak
 
     # expose the port we configured Unicorn to bind to
     ports:
@@ -39,6 +41,36 @@ services:
       - /tmp/agent.sock:/tmp/agent.sock
     environment:
       - SSH_AUTH_SOCK=/tmp/agent.sock
+
+  postgres:
+      image: postgres
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+      environment:
+        POSTGRES_DB: keycloak
+        POSTGRES_USER: keycloak
+        POSTGRES_PASSWORD: password
+  keycloak:
+      image: quay.io/keycloak/keycloak:latest
+      environment:
+        DB_VENDOR: POSTGRES
+        DB_ADDR: postgres
+        DB_DATABASE: keycloak
+        DB_USER: keycloak
+        DB_SCHEMA: public
+        DB_PASSWORD: password
+        KEYCLOAK_USER: admin
+        KEYCLOAK_PASSWORD: Pa55w0rd
+        # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
+        #JDBC_PARAMS: "ssl=true"
+      ports:
+        - 8080:8080
+        - 8443:8443
+      depends_on:
+        - postgres
+
 volumes:
   docker-example-postgres: {}
   bundle: {}
+  postgres_data:
+      driver: local

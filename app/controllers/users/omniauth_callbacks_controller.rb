@@ -15,9 +15,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     sign_in_with :wordpress_login, :wordpress_oauth2
   end
 
-  def keycloak_oauth2
-    sign_in_with :keycloak_login, :keycloak_oauth2
+  #START Ergänzung für Keycloak-Anbindung
+  def openid_connect
+    sign_in_with :openid_connect_login, :openid_connect
   end
+  #ENDE Ergänzung für Keycloak-Anbindung
 
   def after_sign_in_path_for(resource)
     if resource.registering_with_oauth
@@ -35,6 +37,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       auth = request.env["omniauth.auth"]
 
       identity = Identity.first_or_create_from_oauth(auth)
+      logger.info("XXX")
+      logger.info(identity)
       @user = current_user || identity.user || User.first_or_initialize_for_oauth(auth)
 
       if save_user
