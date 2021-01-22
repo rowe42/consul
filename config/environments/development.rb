@@ -29,8 +29,10 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
-  config.action_mailer.asset_host = "http://localhost:3000"
+  #START TODO anpassen
+  config.action_mailer.default_url_options = { host: "<consul-host>", port: <consul-port> }
+  config.action_mailer.asset_host = "http://<consul-host>:<consul-port>"
+  #ENDE TODO anpassen
 
   # Deliver emails to a development mailbox at /letter_opener
   config.action_mailer.delivery_method = :letter_opener
