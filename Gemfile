@@ -54,7 +54,7 @@ gem "rollbar", "~> 3.0.1"
 gem "sassc-rails", "~> 2.1.2"
 gem "savon", "~> 2.12.1"
 gem "sitemap_generator", "~> 6.1.2"
-gem "social-share-button", "~> 1.1"
+gem "social-share-button", "~> 1.2.3"
 gem "sprockets", "~> 3.7.2"
 gem "translator-text", "~> 0.1.0"
 gem "turbolinks", "~> 5.2.1"
@@ -100,7 +100,7 @@ group :development do
   gem "capistrano-rails", "~> 1.6.1", require: false
   gem "capistrano3-delayed-job", "~> 1.7.6"
   gem "capistrano3-puma", "~> 4.0.0"
-  gem "erb_lint", require: false
+  gem "erb_lint", "~> 0.0.35", require: false
   gem "github_changelog_generator", "~> 1.15.2"
   gem "mdl", "~> 0.11.0", require: false
   gem "rubocop", "~> 0.91.0", require: false

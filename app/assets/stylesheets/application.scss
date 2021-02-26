@@ -15,6 +15,7 @@
 @import "legislation";
 @import "legislation_process";
 @import "legislation_process_form";
+@import "notification_item";
 @import "community";
 @import "stats";
 @import "custom";
@@ -29,7 +30,8 @@
 @import "jquery-ui/sortable";
 @import "leaflet";
 @import "sticky_overrides";
-@import "admin/*";
+@import "tags";
+@import "admin/**/*";
 @import "sdg/**/*";
 @import "sdg_management/*";
 @import "sdg_management/**/*";

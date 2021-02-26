@@ -105,5 +105,39 @@ describe "SDG Goals", :js do
         expect(page).to have_select "By SDG", selected: "15. Life on Land"
       end
     end
+
+    scenario "has links to read more and read less for long description" do
+      visit sdg_goal_path(15)
+
+      expect(page).to have_css("div.read-more a", text: "Read more about Life on Land")
+      expect(page).to have_css("div.read-more a", text: "Read less about Life on Land", visible: :hidden)
+
+      find("div.read-more a", text: "Read more about Life on Land").click
+
+      expect(page).to have_css("div.read-more a", text: "Read more about Life on Land", visible: :hidden)
+      expect(page).to have_css("div.read-more a", text: "Read less about Life on Land")
+    end
+
+    scenario "has tab target section" do
+      create(:sdg_local_target, code: "15.1.1", title: "SDG local target sample text")
+      visit sdg_goal_path(15)
+
+      within "#target_tabs" do
+        expect(page).to have_content "Targets"
+        expect(page).to have_content "Local targets"
+      end
+
+      within ".tabs-content" do
+        expect(page).to have_content "15.1 By 2020, ensure the conservation, restoration and sustainable"
+        expect(page).not_to have_content "15.1.1 SDG local target sample text"
+      end
+
+      click_link "Local targets"
+
+      within ".tabs-content" do
+        expect(page).to have_content "15.1.1 SDG local target sample text"
+        expect(page).not_to have_content "15.1 By 2020, ensure the conservation, restoration and sustainable"
+      end
+    end
   end
 end
